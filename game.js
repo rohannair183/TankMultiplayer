@@ -1,15 +1,17 @@
-class Game{
-
-    constructor(player, terrain){
+class Game {
+    constructor(player, terrain) {
         this.player = player;
         this.terrain = terrain;
     }
 
-    draw(){
+    draw() {
+        push();
         translate(this.player.pos.x, this.player.pos.y);
-        this.terrain.draw();
+        this.terrain.drawTiles();
         this.player.display();
+        // ui.draw();
         this.player.update();
-
+        // this.terrain.drawPlants();
+        pop();
     }
 }

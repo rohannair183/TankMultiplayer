@@ -1,11 +1,22 @@
 {
   "name": "tankgame",
   "version": "1.0.0",
-  "description": "",
   "main": "sketch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rohan Nair",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohannair183/TankGameV2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rohannair183/TankGameV2/issues"
+  },
+  "homepage": "https://github.com/rohannair183/TankGameV2#readme",
+  "description": "",
+  "dependencies": {
+    "browserify": "^17.0.0"
+  }
 }

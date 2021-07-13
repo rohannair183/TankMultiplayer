@@ -1,56 +1,78 @@
+let folder = "Assets/Bodies";
 
-let img;
-let p, p2, game;
+let p, game;
+
+// Variable for the canvas
 let cnv;
-let keyIsReleased;
+
 let bulletImgs = [];
+
+// To make it run faster
 p5.disableFriendlyErrors = true;
 
+// This variable is only needed for making the shooting mechanic work, I wish I didn't have to but IDK if I can go without. Too lazy to research right now so future Rohan might find the solution.
+let keyIsReleased;
 
-function preload(){
-  for (let i=0; i<3; i++){
-    bulletImgs[i] = loadImage(`Assets/bullets/${i+1}.png`);
-  }
+//UI
+let ui;
+
+// Make terrain generator
+let terrain;
+
+// Game Mode
+const TERRIAN_BLOCK_SIZE = 15;
+
+function preload() {
+    // Load bullets beforehand for performance
+    for (let i = 0; i < 3; i++) {
+        bulletImgs[i] = loadImage(`Assets/bullets/${i + 1}.png`);
+    }
 }
-
 
 function setup() {
-  console.log(bulletImgs);
-  cnv = createCanvas(1024, 640);
-  document.addEventListener('contextmenu', event => event.preventDefault());  // To Center the Canvas
+    // cnv = createCanvas(1024, 600);
+    cnv = createCanvas(displayWidth * 0.99, displayHeight * 0.8);
+    cnv.parent("sketch01");
 
-  var winX = (windowWidth - width) / 2;
-  var winY = (windowHeight - height) / 2;
-  cnv.position(winX, winY);
+    // Prevents right-click from creating dialouge on canvas
+    document.addEventListener("contextmenu", (event) => event.preventDefault());
 
-  imageMode(CENTER);
-  angleMode(DEGREES);
-  
-  terrain = new Terrain(9);
-  p = new Player(createVector(random(width), random(height)), 'Red', 1);
-  game = new Game(p, terrain);
+    // To Center the Canvas
+    var winX = (windowWidth - width) / 2;
+    var winY = (windowHeight - height) / 2;
+    cnv.position(winX, winY);
 
-  //Other Important Variables
-  keyIsReleased = false;
+    imageMode(CENTER);
+    angleMode(DEGREES);
+
+    // Seeds
+    randomSeed(100);
+    noiseSeed(100);
+
+    terrain = new Terrain(TERRIAN_BLOCK_SIZE);
+    p = new Player(createVector(0, 0), "Red", 3);
+    game = new Game(p, terrain);
+
+    console.log(p.pos);
+    //Other Important Variables
+    keyIsReleased = false;
 }
 
-function windowResized(){
-  var winX = (windowWidth - width) / 2;
-  var winY = (windowHeight - height) / 2;
-  cnv.position(winX, winY);
+function windowResized() {
+    var winX = (windowWidth - width) / 2;
+    var winY = (windowHeight - height) / 2;
+    cnv.position(winX, winY);
 }
 
 function draw() {
-  scale(1);
-  background(0);
-  game.draw(); 
+    // scale(0.5);
+    game.draw();
 }
 
-function keyPressed(){
-  if (keyCode == 32) keyIsReleased = true;
-  console.log('hey>');
+function keyPressed() {
+    if (keyCode == 32) keyIsReleased = true;
 }
 
-function keyReleased(){
-  if (keyIsReleased) keyIsReleased = false;
+function keyReleased() {
+    if (keyIsReleased) keyIsReleased = false;
 }
