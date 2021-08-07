@@ -1,5 +1,5 @@
 class Player {
-    constructor(playerPos, tankColor, turretType) {
+    constructor(playerPos, playerRotation, turretRotation, tankColor, turretType) {
         // A Vector (x, y) is the offset for the translate function
         this.pos = playerPos;
 
@@ -9,10 +9,12 @@ class Player {
          *  */
         this.color = tankColor;
         this.turret = turretType; // 1, 2, 3
+        this.maxHealth = 10;
+        this.health = this.maxHealth;
 
         // Movement Vars
-        this.rotation = 0;
-        this.turretRotation = 0;
+        this.rotation = playerRotation;
+        this.turretRotation = turretRotation;
         this.speed = 3;
 
         // Vars used for Shooting Mechanics
@@ -51,24 +53,29 @@ class Player {
         this.turretInput();
         rotate(this.turretRotation);
         image(this.turretImg, 0, 0 - 5, 28, 53);
-        // console.log(this.turretImg.width);
-        // console.log(this.turretImg.height);
         pop();
 
         push();
         translate(width / 2 - this.pos.x, height / 2 - this.pos.y);
         rotate(this.rotation);
         this.reloadBar();
+        this.healthBar();
         pop();
     }
 
     update() {
         this.rotation = this.rotation % 360;
         this.moveInput();
+        moveData.x = -this.pos.x;
+        moveData.y = -this.pos.y;
+        moveData.playerRot = this.rotation;
+        moveData.turretRot = this.turretRotation;
+        socket.emit('move', moveData)
     }
 
     reloadBar() {
         rectMode(CORNER);
+        fill(255, 255, 255);
         rect(-42, -60, 84, 10);
         fill(255, 255, 102);
         rect(
@@ -80,6 +87,25 @@ class Player {
                 this.timeOut,
                 84,
                 0,
+                true
+            ),
+            10
+        );
+    }
+    healthBar() {
+        rectMode(CORNER);
+        fill(255, 255, 255);
+        rect(-42, -80, 84, 10);
+        fill(100, 255, 100);
+        rect(
+            -42,
+            -80,
+            map(
+                this.health,
+                0,
+                this.maxHealth,
+                0,
+                84,
                 true
             ),
             10
@@ -123,21 +149,37 @@ class Player {
             (this.lastShotTime + this.timeOut <= millis() ||
                 this.lastShotTime == 0)
         ) {
+
             console.log(`FPS: ${frameRate()}`);
-
-            this.lastShotTime = millis();
-            this.firing = true;
-
-            const vel = createVector(
+            console.log(this.bullets);
+            const VEL = createVector(
                 -this.bulletSpeed *
                     cos(90 - this.rotation - this.turretRotation),
                 this.bulletSpeed * sin(90 - this.rotation - this.turretRotation)
             );
+            this.lastShotTime = millis();
+            this.firing = true;
+
+        
+            //Emit socket event that a bullet was fired
+            let fireData = {
+                id: moveData.id,
+                x: this.pos.x,
+                y: this.pos.y,
+                bulletRot: this.rotation + this.turretRotation,
+                velX: VEL.x,
+                velY: VEL.y,
+                turret: this.turret,
+                birthTime: millis(),
+            };
+
+            socket.emit('fire', fireData);
+
             this.bullets.push(
                 new Bullet(
                     this.pos,
                     this.rotation + this.turretRotation,
-                    vel,
+                    VEL,
                     this.turret
                 )
             );

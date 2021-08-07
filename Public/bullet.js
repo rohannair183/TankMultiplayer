@@ -2,7 +2,7 @@ class Bullet {
     constructor(pos, rotation, velocity, bulletType) {
         imageMode(CENTER);
         this.type = bulletType;
-        this.pos = createVector(p.pos.x, p.pos.y);
+        this.pos = createVector(pos.x, pos.y);
         this.velocity = velocity;
         this.rotation = rotation;
         this.birthTime = millis();
