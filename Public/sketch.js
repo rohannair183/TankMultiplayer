@@ -1,11 +1,17 @@
-let folder = "Assets/Bodies";
+// Multiplayer
+let socket;
 
-let p, game;
-
+let moveData;
+let p, game, id;
+let enemies = [];
+let bullets = [];
+let colors = ["Red", "Blue", "Green", "Sand"];
 // Variable for the canvas
 let cnv;
 
 let bulletImgs = [];
+let bodyImgs = {};
+let turretImgs = {};
 
 // To make it run faster
 p5.disableFriendlyErrors = true;
@@ -23,10 +29,32 @@ let terrain;
 const TERRIAN_BLOCK_SIZE = 15;
 
 function preload() {
+    //Connect client to server
+    socket = io.connect('http://localhost:3000');
+    socket.on("connect", () => {
+        id = socket.id; 
+        console.log(id);
+
+    });
+
     // Load bullets beforehand for performance
     for (let i = 0; i < 3; i++) {
         bulletImgs[i] = loadImage(`Assets/bullets/${i + 1}.png`);
     }
+    for (let color of colors){
+        bodyImgs[color] = loadImage(
+            `Assets/Bodies/tankBody_${color.toLowerCase()}.png`
+        );
+        for (let i=1; i<4; i++){
+            turretImgs[`${i}${color}`] = loadImage(
+                `Assets/Turrets/tank${color}_barrel${i}.png`
+            );
+        }
+        
+    }
+    
+    
+
 }
 
 function setup() {
@@ -42,18 +70,43 @@ function setup() {
     var winY = (windowHeight - height) / 2;
     cnv.position(winX, winY);
 
+    //Changing modes
     imageMode(CENTER);
     angleMode(DEGREES);
+
+
+
+    //Get ID on connection
+    
+    //Data to be sent to the client
+    pos = createVector(0, 0);
+    let playerRot = 0;
+    let turretRot = 0;
+    let color = colors[ Math.floor((Math.random() * colors.length))]
+    let turret = Math.ceil(Math.random() * 3);
+    moveData = {
+        x: pos.x,
+        y: pos.y,
+        playerRot: 0,
+        turretRot: 0,
+        id: id,
+        color: color,
+        turret: turret,
+    };
+    console.log(moveData);
+
+    //Send data
+    socket.emit('start', moveData);
 
     // Seeds
     randomSeed(100);
     noiseSeed(100);
 
+    // Parameters
     terrain = new Terrain(TERRIAN_BLOCK_SIZE);
-    p = new Player(createVector(0, 0), "Red", 3);
+    p = new Player(pos, playerRot, turretRot, color, turret);
     game = new Game(p, terrain);
 
-    console.log(p.pos);
     //Other Important Variables
     keyIsReleased = false;
 }
@@ -63,10 +116,35 @@ function windowResized() {
     var winY = (windowHeight - height) / 2;
     cnv.position(winX, winY);
 }
+function updateBullets(){
+    for (let i = 0; i < bullets.length; i++) {
+        bullets[i].move();
+        bullets[i].display();
+        if (!bullets[i].isAlive()) {
+            bullets.shift();
+            i -= 1;
+        }
+    }
+}
 
 function draw() {
+    socket.on('heartbeat', (data)=>{
+        enemies = data;
+    });
+    socket.off('createBullet').on('createBullet', (data)=>{
+        const POS = createVector(data.x, data.y);
+        const VEL = createVector(data.velX, data.velY);
+        if(data.id != moveData.id){
+            bullets.push(new EnemyBullet(POS, data.bulletRot, VEL, data.turret));
+            console.log(bullets);
+        }
+        // console.log(bullets);
+    });
     // scale(0.5);
     game.draw();
+    updateBullets();
+    updateEnemies();
+
 }
 
 function keyPressed() {
@@ -75,4 +153,30 @@ function keyPressed() {
 
 function keyReleased() {
     if (keyIsReleased) keyIsReleased = false;
+}
+
+function updateEnemies(){
+    for (const id in enemies){
+        if (id != moveData.id){
+            push();
+            translate(width/2 + p.pos.x, height/2 + p.pos.y);
+
+            translate(enemies[id].x, enemies[id].y);
+            rotate(enemies[id].playerRot);
+            translate(- enemies[id].x, - enemies[id].y);
+
+            image(bodyImgs[enemies[id].color], enemies[id].x, enemies[id].y, 56, 56);
+
+            translate(enemies[id].x, enemies[id].y);
+            rotate(enemies[id].turretRot);
+            translate(-enemies[id].x, -enemies[id].y);
+
+            image(turretImgs[`${enemies[id].turret}${enemies[id].color}`], enemies[id].x, enemies[id].y, 28, 53);
+            pop();
+        }
+        
+    }
+
+    
+
 }
