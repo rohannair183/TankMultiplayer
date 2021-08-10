@@ -31,6 +31,11 @@ io.sockets.on('connection', (socket)=>{
             io.sockets.emit('createBullet', data);
             // bullets[data.id] = data;
         });
+        // socket.on('dead', data =>{
+        //     socket.disconnect();
+        //     delete players[socket.id];
+        //     delete bullets[socket.id];
+        // });
     socket.on('disconnect', () => {
         delete players[socket.id];
         delete bullets[socket.id];

@@ -1,5 +1,5 @@
 class Player {
-    constructor(playerPos, playerRotation, turretRotation, tankColor, turretType) {
+    constructor(playerPos, playerRotation, turretRotation, tankColor, turretType, maxHealth) {
         // A Vector (x, y) is the offset for the translate function
         this.pos = playerPos;
 
@@ -9,8 +9,9 @@ class Player {
          *  */
         this.color = tankColor;
         this.turret = turretType; // 1, 2, 3
-        this.maxHealth = 10;
+        this.maxHealth = maxHealth;
         this.health = this.maxHealth;
+        this.size = createVector(56,56);
 
         // Movement Vars
         this.rotation = playerRotation;
@@ -42,6 +43,10 @@ class Player {
                 this.bullets.shift();
                 i -= 1;
             }
+            if (this.collission(this.bullets[i].pos, this.bullets[i].size)){
+                this.bullets.shift();
+                i -= 1;
+            }
         }
 
         push();
@@ -61,6 +66,10 @@ class Player {
         this.reloadBar();
         this.healthBar();
         pop();
+
+        if (this.health <= 0){
+            socket.emit('dead', moveData);
+        }
     }
 
     update() {
@@ -70,6 +79,7 @@ class Player {
         moveData.y = -this.pos.y;
         moveData.playerRot = this.rotation;
         moveData.turretRot = this.turretRotation;
+        moveData.health = this.health;
         socket.emit('move', moveData)
     }
 
@@ -186,4 +196,15 @@ class Player {
             keyCode += 21;
         }
     }
+    collission(pos, size){
+        for (const id in enemies){
+            if (id != moveData.id){
+                let sz = createVector(56, 56);
+                let enemPos = createVector(-enemies[id].x, -enemies[id].y);
+                console.log(enemPos);
+                let collision = collideRectRectVector(enemPos, sz, pos, size);
+                return collision
+            }
+    }
+}
 }

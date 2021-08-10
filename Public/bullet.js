@@ -6,6 +6,9 @@ class Bullet {
         this.velocity = velocity;
         this.rotation = rotation;
         this.birthTime = millis();
+        this.size = createVector(Math.floor(bulletImgs[this.type - 1].width * (6 / 8)), Math.floor(bulletImgs[this.type - 1].height * (6 / 8)));
+        this.alive = true;
+
     }
 
     display() {
