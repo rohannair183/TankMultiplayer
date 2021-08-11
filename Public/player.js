@@ -36,6 +36,7 @@ class Player {
     display() {
         this.fireInput();
         // Display All bullets
+        
         for (let i = 0; i < this.bullets.length; i++) {
             this.bullets[i].move();
             this.bullets[i].display();
@@ -43,8 +44,9 @@ class Player {
                 this.bullets.shift();
                 i -= 1;
             }
-            if (this.collission(this.bullets[i].pos, this.bullets[i].size)){
-                this.bullets.shift();
+            console.log(this.bullets)
+            if (this.bullets[i] && this.collission(this.bullets[i].pos, this.bullets[i].size)){
+                this.bullets.splice(i, 1);                
                 i -= 1;
             }
         }
@@ -201,7 +203,6 @@ class Player {
             if (id != moveData.id){
                 let sz = createVector(56, 56);
                 let enemPos = createVector(-enemies[id].x, -enemies[id].y);
-                console.log(enemPos);
                 let collision = collideRectRectVector(enemPos, sz, pos, size);
                 return collision
             }
