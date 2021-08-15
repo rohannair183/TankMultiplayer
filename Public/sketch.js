@@ -1,6 +1,5 @@
 // Multiplayer
 let socket;
-
 let moveData;
 let p, game, id;
 const MAX_HEALTH = 120;
@@ -55,10 +54,17 @@ function preload() {
     }
     
     
+    
 
 }
 
 function setup() {
+    window.addEventListener("focus", ()=>{
+        document.title = "Tank Game ⁍";
+        socket.on('heartbeat', (data)=>{
+            enemies = data;
+        });
+    })
     // cnv = createCanvas(1024, 600);
     cnv = createCanvas(displayWidth * 0.99, displayHeight * 0.8);
     cnv.parent("sketch01");
@@ -119,11 +125,7 @@ function windowResized() {
 }
 
 function collissionBullet(pos, size){
-    let sz = p.size.sub(10, 10)
-    console.log(sz)
-    let collision = collideRectRectVector(p.pos, sz, pos, size);
-    p.size.add(10,10);
-
+    let collision = collideRectRectVector(p.pos, p.size, pos, size);
     return collision
 }
 
@@ -135,7 +137,7 @@ function updateBullets(){
             bullets.shift();
             i -= 1;
         }
-        if (collissionBullet(bullets[i].pos, bullets[i].size)) {
+        if (bullets[i] && collissionBullet(bullets[i].pos, bullets[i].size)) {
             p.health -= 36;
             bullets.shift();
             i -= 1;
@@ -144,10 +146,15 @@ function updateBullets(){
     }
 }
 
+
 function draw() {
-    socket.on('heartbeat', (data)=>{
-        enemies = data;
-    });
+    window.onfocus = () => {
+        document.title = "Tank Game ⁍";
+    };
+    window.onblur = () => {
+        document.title = "[!] Tank Game ⁍"
+    };
+    
     socket.off('createBullet').on('createBullet', (data)=>{
         const POS = createVector(data.x, data.y);
         const VEL = createVector(data.velX, data.velY);

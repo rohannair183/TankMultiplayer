@@ -44,8 +44,9 @@ class Player {
                 this.bullets.shift();
                 i -= 1;
             }
-            console.log(this.bullets)
-            if (this.bullets[i] && this.collission(this.bullets[i].pos, this.bullets[i].size)){
+            if (this.bullets[i] && this.collission(this.bullets[i].pos, this.bullets[i].size).collide){
+                let victim = this.collission(this.bullets[i].pos, this.bullets[i].size).player
+                victim.health -= 36;
                 this.bullets.splice(i, 1);                
                 i -= 1;
             }
@@ -200,12 +201,20 @@ class Player {
     }
     collission(pos, size){
         for (const id in enemies){
+            if (!id){
+                return {collide: false}
+            }
             if (id != moveData.id){
                 let sz = createVector(56, 56);
                 let enemPos = createVector(-enemies[id].x, -enemies[id].y);
                 let collision = collideRectRectVector(enemPos, sz, pos, size);
-                return collision
+                return {collide:collision, player: enemies[id]}
             }
+            return {collide: false}
+
     }
+    return {collide: false}
+
+
 }
 }
