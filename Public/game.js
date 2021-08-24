@@ -10,6 +10,7 @@ class Game {
         this.terrain.drawTiles();
         this.player.display();
         this.player.update();
+        
         // this.terrain.drawPlants();
         pop();
     }

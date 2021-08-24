@@ -28,6 +28,14 @@ io.sockets.on("connection", (socket) => {
     io.sockets.emit("createBullet", data);
     // bullets[data.id] = data;
   });
+  socket.on("healthdown", (data) => {
+    players = data;
+  });
+  socket.on("bullet_hit_unfocused", (data) => {
+    players[data.id] = data;
+    io.to(data.id).emit('bullet_hit_unfocused', data);
+    console.log(data.health)
+  });
   socket.on("dead", (data) => {
     socket.disconnect();
     delete players[socket.id];
