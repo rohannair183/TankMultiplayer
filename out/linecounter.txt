@@ -85,3 +85,92 @@ Public/style.css, code is 0, comment is 0, blank is 0.
 Public/terrain.js, code is 42, comment is 41, blank is 11.
 server.js, code is 37, comment is 1, blank is 5.
 ===============================================================================
+===============================================================================
+EXTENSION NAME : linecounter
+EXTENSION VERSION : 0.2.7
+-------------------------------------------------------------------------------
+count time : 2021-08-24 17:43:05
+count workspace : /Users/rohannair/Documents/TankGameV2
+total files : 69
+total code lines : 7127
+total comment lines : 89
+total blank lines : 88
+
+    statistics
+   |      extension|     total code|  total comment|    total blank|percent|
+   -------------------------------------------------------------------------
+   |          .json|           6534|              0|              5|     92|
+   |            .js|            552|             89|             72|    7.7|
+   |          .html|             41|              0|             11|   0.58|
+   |           .css|              0|              0|              0|    0.0|
+   -------------------------------------------------------------------------
+jsconfig.json, code is 6, comment is 0, blank is 1.
+package-lock.json, code is 6497, comment is 0, blank is 3.
+package.json, code is 28, comment is 0, blank is 0.
+Public/Assets/Bodies/tankBody_blue.png, it is a binary file.
+Public/Assets/Bodies/tankBody_dark.png, it is a binary file.
+Public/Assets/Bodies/tankBody_green.png, it is a binary file.
+Public/Assets/Bodies/tankBody_red.png, it is a binary file.
+Public/Assets/Bodies/tankBody_red2.png, it is a binary file.
+Public/Assets/Bodies/tankBody_red_.png, it is a binary file.
+Public/Assets/Bodies/tankBody_sand.png, it is a binary file.
+Public/Assets/Bodies/Thumbs.db, it is a binary file.
+Public/Assets/bullets/1.png, it is a binary file.
+Public/Assets/bullets/2.png, it is a binary file.
+Public/Assets/bullets/3.png, it is a binary file.
+Public/Assets/bullets/3__.png, it is a binary file.
+Public/Assets/bullets/Thumbs.db, it is a binary file.
+Public/Assets/plants/brown1.png, it is a binary file.
+Public/Assets/plants/brown1__.png, it is a binary file.
+Public/Assets/plants/green1.png, it is a binary file.
+Public/Assets/plants/green1__.png, it is a binary file.
+Public/Assets/plants/Thumbs.db, it is a binary file.
+Public/Assets/specialBarrel1_outline.png, it is a binary file.
+Public/Assets/specialBarrel2_outline.png, it is a binary file.
+Public/Assets/specialBarrel3_outline.png, it is a binary file.
+Public/Assets/specialBarrel4_outline.png, it is a binary file.
+Public/Assets/specialBarrel5_outline.png, it is a binary file.
+Public/Assets/specialBarrel6_outline.png, it is a binary file.
+Public/Assets/specialBarrel7_outline.png, it is a binary file.
+Public/Assets/tankBody_bigRed_outline.png, it is a binary file.
+Public/Assets/tankBody_darkLarge_outline.png, it is a binary file.
+Public/Assets/tankBody_huge_outline.png, it is a binary file.
+Public/Assets/terrain/1.png, it is a binary file.
+Public/Assets/terrain/2.png, it is a binary file.
+Public/Assets/terrain/3.png, it is a binary file.
+Public/Assets/terrain/4.png, it is a binary file.
+Public/Assets/terrain/Thumbs.db, it is a binary file.
+Public/Assets/Thumbs.db, it is a binary file.
+Public/Assets/Turrets/tankblue_barrel1.png, it is a binary file.
+Public/Assets/Turrets/tankBlue_barrel2.png, it is a binary file.
+Public/Assets/Turrets/tankBlue_barrel3.png, it is a binary file.
+Public/Assets/Turrets/tankDark_barrel1.png, it is a binary file.
+Public/Assets/Turrets/tankDark_barrel2.png, it is a binary file.
+Public/Assets/Turrets/tankDark_barrel3.png, it is a binary file.
+Public/Assets/Turrets/tankGreen_barrel1.png, it is a binary file.
+Public/Assets/Turrets/tankGreen_barrel2.png, it is a binary file.
+Public/Assets/Turrets/tankGreen_barrel3.png, it is a binary file.
+Public/Assets/Turrets/tankRed_barrel1.png, it is a binary file.
+Public/Assets/Turrets/tankRed_barrel2.png, it is a binary file.
+Public/Assets/Turrets/tankRed_barrel3.png, it is a binary file.
+Public/Assets/Turrets/tankRed_barrel3__.png, it is a binary file.
+Public/Assets/Turrets/tankSand_barrel1.png, it is a binary file.
+Public/Assets/Turrets/tankSand_barrel2.png, it is a binary file.
+Public/Assets/Turrets/tankSand_barrel3.png, it is a binary file.
+Public/Assets/Turrets/Thumbs.db, it is a binary file.
+Public/bullet.js, code is 34, comment is 1, blank is 4.
+Public/EnemyBullet.js, code is 36, comment is 1, blank is 3.
+Public/game.js, code is 14, comment is 1, blank is 2.
+Public/index.html, code is 18, comment is 0, blank is 7.
+Public/libraries/p5.clickable.min.js, code is 1, comment is 0, blank is 0.
+Public/libraries/p5.experience.min.js, code is 1, comment is 0, blank is 0.
+Public/libraries/p5.min.js, code is 1, comment is 1, blank is 1.
+Public/libraries/p5.sound.min.js, code is 1, comment is 3, blank is 0.
+Public/main.html, code is 23, comment is 0, blank is 4.
+Public/player.js, code is 183, comment is 17, blank is 19.
+Public/settings.json, code is 3, comment is 0, blank is 1.
+Public/sketch.js, code is 196, comment is 23, blank is 28.
+Public/style.css, code is 0, comment is 0, blank is 0.
+Public/terrain.js, code is 42, comment is 41, blank is 11.
+server.js, code is 43, comment is 1, blank is 4.
+===============================================================================
