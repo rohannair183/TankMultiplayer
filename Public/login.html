@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tank Game ⁍</title>
+    <div id="sketch01" style="display: flex; justify-content: center; align-items: center;"> </div>
+
+    
+    
+  </head>
+
+  <body>
+    <script>
+        let username = prompt("Choose a Username: ");
+        if (username){
+            localStorage.setItem('tankUsername', username)
+            window.location = "/main.html"; 
+        }
+        
+    </script>
+    
+  </body>
+</html>

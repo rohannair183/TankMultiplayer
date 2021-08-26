@@ -7,19 +7,21 @@
     <title>Tank Game ⁍</title>
     <div id="sketch01" style="display: flex; justify-content: center; align-items: center;"> </div>
 
-    
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <script src="libraries/p5.experience.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5.collide2d"></script>
     
   </head>
 
   <body>
-    <script>
-        let username = prompt("Choose a Username: ");
-        if (username){
-            localStorage.setItem('tankUsername', username)
-            window.location = "/main.html"; 
-        }
-        
-    </script>
-    
+    <script src="sketch.js"></script>
+    <script src="player.js"></script>
+    <script src="game.js"></script>
+    <script src="terrain.js"></script>
+    <script src="bullet.js"></script>
+    <script src="EnemyBullet.js"></script>
   </body>
 </html>
