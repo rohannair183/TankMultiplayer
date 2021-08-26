@@ -1,7 +1,7 @@
 let express = require("express");
 let app = express();
 let server = app.listen(process.env.PORT || 3000);
-app.use(express.static("public"));
+app.use(express.static("./public"));
 let socket = require("socket.io");
 let io = socket(server, () => {});
 
