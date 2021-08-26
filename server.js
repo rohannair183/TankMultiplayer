@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'production') {
   // Express serve up index.html file if it doesn't recognize route
   const path = require('path');
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'Public', 'index.html'));
   });
 }
 app.use(express.static("public"));
