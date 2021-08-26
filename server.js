@@ -3,16 +3,16 @@ let app = express();
 let port = process.env.PORT || 3000;
 console.log(port)
 let server = app.listen(port);
-// if (process.env.NODE_ENV === 'production') {
-//   // Exprees will serve up production assets
-//   app.use(express.static('public/index'));
+if (process.env.NODE_ENV === 'production') {
+  // Exprees will serve up production assets
+  app.use(express.static('public/index'));
 
-//   // Express serve up index.html file if it doesn't recognize route
-//   const path = require('path');
-//   app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'Public', 'index.html', 'main.html'));
-//   });
-// }
+  // Express serve up index.html file if it doesn't recognize route
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'Public', 'index.html', 'main.html'));
+  });
+}
 app.use(express.static("public"));
 let socket = require("socket.io");
 let io = socket(server, () => {});
