@@ -1,6 +1,7 @@
 let express = require("express");
 let app = express();
-let server = app.listen(process.env.PORT || 3000);
+let port = process.env.PORT || 3000;
+let server = app.listen(port);
 if (process.env.NODE_ENV === 'production') {
   // Exprees will serve up production assets
   app.use(express.static('public/index'));
@@ -11,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-app.use(express.static("/public"));
+app.use(express.static("public"));
 let socket = require("socket.io");
 let io = socket(server, () => {});
 
