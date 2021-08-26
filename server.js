@@ -3,7 +3,7 @@ let app = express();
 let server = app.listen(process.env.PORT || 3000);
 if (process.env.NODE_ENV === 'production') {
   // Exprees will serve up production assets
-  app.use(express.static('client/build'));
+  app.use(express.static('public/index'));
 
   // Express serve up index.html file if it doesn't recognize route
   const path = require('path');
