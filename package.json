@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/rohannair183/TankGameV2/issues"
   },
-  "homepage": "https://github.com/rohannair183/TankGameV2#readme",
+  "homepage": "https://rohantank.herokuapp.com/",
   "dependencies": {
     "browserify": "^17.0.0",
     "express": "^4.17.1",
