@@ -7,7 +7,8 @@ let enemies = [];
 let bullets = [];
 let colors = ["Red", "Blue", "Green", "Sand"];
 let tabFocus; // wheter tab is in focus or not
-
+let playerCount;
+let kills = 0;
 // Variable for the canvas
 let cnv;
 
@@ -133,50 +134,11 @@ function windowResized() {
   cnv.position(winX, winY);
 }
 
-function collissionBullet(pos, size) {
-  let collision = collideRectRectVector(p.pos, p.size, pos, size);
-  return collision;
-}
-
-function updateBullets() {
-  for (let i = 0; i < bullets.length; i++) {
-    bullets[i].move();
-    bullets[i].display();
-    if (!bullets[i].isAlive()) {
-      bullets.shift();
-      i -= 1;
-    }
-    if (bullets[i] && collissionBullet(bullets[i].pos, bullets[i].size)) {
-    //   p.health -= 36;
-      bullets.shift();
-      i -= 1;
-    }
-  }
-}
-
 function draw() {
-  socket.on("heartbeat", (data) => {
-    enemies = data;
-    // console.log(enemies);
-  });
-  socket.off("createBullet").on("createBullet", (data) => {
-    const POS = createVector(data.x, data.y);
-    const VEL = createVector(data.velX, data.velY);
-    if (data.id != moveData.id) {
-      bullets.push(new EnemyBullet(POS, data.bulletRot, VEL, data.turret));
-    }
-    // console.log(bullets);
-  });
-  socket.on("bullet_hit_unfocused", (data) => {
-    console.log(data.health);
-    moveData = data;
-    p.health = data.health;
-    console.log("made it");
-  });
   // scale(0.5);
+  game.getEvents();
   game.draw();
-  updateBullets();
-  updateEnemies();
+  
 }
 
 function keyPressed() {
@@ -185,62 +147,4 @@ function keyPressed() {
 
 function keyReleased() {
   if (keyIsReleased) keyIsReleased = false;
-}
-function healthBar(health, pos) {
-  rectMode(CORNER);
-  fill(255, 255, 255);
-  rect(pos.x - 42, pos.y - 80, 84, 10);
-  fill(100, 255, 100);
-  rect(pos.x - 42, pos.y - 80, map(health, 0, MAX_HEALTH, 0, 84, true), 10);
-}
-
-function updateEnemies() {
-  for (const id in enemies) {
-    if (id != moveData.id) {
-      push();
-      translate(width / 2 + p.pos.x, height / 2 + p.pos.y);
-      healthBar(enemies[id].health, createVector(enemies[id].x, enemies[id].y));
-      translate(enemies[id].x, enemies[id].y);
-      rotate(enemies[id].playerRot);
-      translate(-enemies[id].x, -enemies[id].y);
-
-      image(bodyImgs[enemies[id].color], enemies[id].x, enemies[id].y, 56, 56);
-
-      translate(enemies[id].x, enemies[id].y);
-      rotate(enemies[id].turretRot);
-      translate(-enemies[id].x, -enemies[id].y);
-
-      image(
-        turretImgs[`${enemies[id].turret}${enemies[id].color}`],
-        enemies[id].x,
-        enemies[id].y,
-        28,
-        53
-      );
-      pop();
-      let sz = createVector(56, 56);
-      let enemPos = createVector(-enemies[id].x, -enemies[id].y);
-      collissionDetect(enemPos, sz);
-    }
-  }
-  function collissionDetect(pos, size) {
-    let collision = collideRectRectVector(p.pos, size, pos, size);
-    if (collision) {
-      if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
-        p.pos.x += p.speed * 1.22 * cos(90 - p.rotation);
-        p.pos.y -= p.speed * 1.22 * sin(90 - p.rotation);
-      }
-      if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
-        p.pos.x -= p.speed * 1.22 * cos(90 - p.rotation);
-        p.pos.y += p.speed * 1.22 * sin(90 - p.rotation);
-      }
-      if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-        p.rotation += 2;
-      }
-      if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-        p.rotation -= 2;
-      }
-    }
-  }
-  
 }

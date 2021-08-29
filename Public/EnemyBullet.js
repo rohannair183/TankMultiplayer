@@ -30,7 +30,7 @@ class EnemyBullet {
         this.pos.add(this.velocity);
         // console.log(`X: ${this.pos.x}, Y: ${this.pos.y}`);
     }
-
+   
     isAlive() {
         if (millis() - this.birthTime > 4000) {
             return false;

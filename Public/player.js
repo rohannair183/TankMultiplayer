@@ -63,9 +63,11 @@ class Player {
         i -= 1;
       }
     }
-
+    fill(255)
+    textSize(32);
     push();
     translate(width / 2 - this.pos.x, height / 2 - this.pos.y);
+    text(playerCount, width/2 - 32, -height/2 + 32);
 
     rotate(this.rotation);
     image(this.bodyImg, 0, 0, 56, 56);

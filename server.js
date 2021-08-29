@@ -17,6 +17,7 @@ app.use(express.static("public"));
 let socket = require("socket.io");
 let io = socket(server, () => {});
 
+let playerCount = 0;
 let players = {};
 let bullets = {};
 
@@ -24,6 +25,7 @@ setInterval(heartbeat, 20);
 
 function heartbeat() {
     io.sockets.emit("heartbeat", players);
+    io.sockets.emit('gameData', {playerCount: playerCount});
 }
 
 io.sockets.on("connection", (socket) => {
@@ -32,6 +34,8 @@ io.sockets.on("connection", (socket) => {
   socket.on("start", (data) => {
     players[data.id] = data;
     console.log(players);
+    playerCount += 1;
+    console.log(`player count: ${playerCount}`);
   });
   socket.on("move", (data) => {
     players[data.id] = data;
@@ -54,6 +58,7 @@ io.sockets.on("connection", (socket) => {
     delete bullets[socket.id];
   });
   socket.on("disconnect", () => {
+    playerCount -= 1;
     delete players[socket.id];
     delete bullets[socket.id];
   });
