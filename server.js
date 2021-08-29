@@ -5,15 +5,14 @@ console.log(port)
 let server = app.listen(port);
 if (process.env.NODE_ENV === 'production') {
   // Exprees will serve up production assets
-  app.use(express.static('public/index'));
-
-  // Express serve up index.html file if it doesn't recognize route
-  const path = require('path');
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'Public', 'index.html'));
-  });
+  const root = require('path').join(__dirname, 'Public')
+  app.use(express.static(root));
+  app.get("*", (req, res) => {
+    res.sendFile('index.html', { root });
+})
+}else{
+  app.use(express.static("public"));
 }
-app.use(express.static("public"));
 let socket = require("socket.io");
 let io = socket(server, () => {});
 
