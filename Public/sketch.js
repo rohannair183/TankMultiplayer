@@ -34,7 +34,7 @@ const TERRIAN_BLOCK_SIZE = 15;
 function preload() {
 console.log(localStorage.getItem('tankUsername'));
   //Connect client to server
-  socket = io.connect(process.env.PORT);
+  socket = io();
   socket.on("connect", () => {
     id = socket.id;
     console.log(id);
