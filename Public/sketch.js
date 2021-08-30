@@ -42,15 +42,15 @@ console.log(localStorage.getItem('tankUsername'));
 
   // Load bullets beforehand for performance
   for (let i = 0; i < 3; i++) {
-    bulletImgs[i] = loadImage("app/Public/Assets/bullets/${i + 1}.png");
+    bulletImgs[i] = loadImage("Assets/bullets/${i + 1}.PNG");
   }
   for (let color of colors) {
     bodyImgs[color] = loadImage(
-      "app/Public/Assets/Bodies/tankBody_${color.toLowerCase()}.png"
+      "Assets/Bodies/tankBody_${color.toLowerCase()}.PNG"
     );
     for (let i = 1; i < 4; i++) {
       turretImgs[`${i}${color}`] = loadImage(
-        "app/Public/Assets/Turrets/tank${color}_barrel${i}.png"
+        "Assets/Turrets/tank${color}_barrel${i}.PNG"
       );
     }
   }
