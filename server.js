@@ -2,6 +2,8 @@ let express = require("express");
 let app = express();
 let port = process.env.PORT || 3000;
 console.log(port)
+console.log(__dirname)
+
 let server = app.listen(port);
 if (process.env.NODE_ENV === 'production') {
   // Exprees will serve up production assets
