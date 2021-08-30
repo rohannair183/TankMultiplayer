@@ -42,7 +42,7 @@ console.log(localStorage.getItem('tankUsername'));
 
   // Load bullets beforehand for performance
   for (let i = 0; i < 3; i++) {
-    bulletImgs[i] = loadImage(`./Assets/bullets/${i + 1}.png`);
+    bulletImgs[i] = loadImage(`../Assets/bullets/${i + 1}.png`);
   }
   for (let color of colors) {
     bodyImgs[color] = loadImage(
